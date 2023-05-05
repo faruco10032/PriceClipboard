@@ -1,0 +1,48 @@
+{
+    "manifest_version": 3,
+    "name": "Price Clipboard",
+    "version": "1.0",
+    "icons": {
+      "16": "icon/icon16.png",
+      "24": "icon/icon24.png",
+      "48": "icon/icon48.png",
+      "128": "icon/icon128.png"
+    },
+    "action": {
+      "default_icon": {
+        "16": "icon/icon16.png",
+        "48": "icon/icon48.png",
+        "128": "icon/icon128.png"
+      },
+      "default_popup": "popup.html",
+      "default_title": "Price Clipboard"
+    },
+    "permissions": [
+      "storage",
+      "activeTab",
+      "scripting"
+    ],
+    "options_page": "options.html",
+    "content_scripts": [
+      {
+        "matches": [
+          "https://*.amazon.com/*",
+          "https://*.amazon.co.jp/*",
+          "https://*.amazon.co.uk/*",
+          "https://*.amazon.ca/*",
+          "https://*.amazon.com.au/*",
+          "https://*.amazon.de/*",
+          "https://*.amazon.fr/*",
+          "https://*.amazon.it/*",
+          "https://*.amazon.es/*",
+          "https://*.amazon.nl/*",
+          "https://*.amazon.in/*",
+          "https://*.amazon.se/*",
+          "https://*.amazon.com.br/*"
+        ],
+        "js": ["content.js"]
+      }
+    ],
+    "author": "faruco10032"
+  }
+  
