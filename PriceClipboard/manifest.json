@@ -38,7 +38,8 @@
           "https://*.amazon.nl/*",
           "https://*.amazon.in/*",
           "https://*.amazon.se/*",
-          "https://*.amazon.com.br/*"
+          "https://*.amazon.com.br/*",
+          "https://akizukidenshi.com/*"
         ],
         "js": ["content.js"]
       }

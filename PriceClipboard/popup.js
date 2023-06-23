@@ -36,12 +36,27 @@ URL：${productUrl}`
 });
 
 function getProductInfo(quantity) {
-  const productNameElement = document.getElementById("productTitle");
-  const productPriceElement = document.querySelector(".a-price-whole");
-  const productUrl = window.location.href;
-  const asinMatch = productUrl.match(/dp\/([A-Z0-9]{10})/);
-  const asin = asinMatch ? asinMatch[1] : null;
-  const shortProductUrl = asin ? `https://www.amazon.co.jp/dp/${asin}` : productUrl;
+  let productNameElement;
+  let productPriceElement;
+  let productUrl = window.location.href;
+  
+  if (productUrl.includes('amazon')) {
+    productNameElement = document.getElementById("productTitle");
+    productPriceElement = document.querySelector(".a-price-whole");
+    const asinMatch = productUrl.match(/dp\/([A-Z0-9]{10})/);
+    const asin = asinMatch ? asinMatch[1] : null;
+    productUrl = asin ? `https://www.amazon.co.jp/dp/${asin}` : productUrl;
+  } else if (productUrl.includes('akizukidenshi')) {
+    productNameElement = document.querySelector(".order_g");
+    productPriceElement = document.querySelectorAll(".f14b")[1];
+    let productNameText;
+    if (productNameElement) {
+      productNameText = productNameElement.innerText
+        .replace(/\s*\n.*/, "") // Remove everything after the first newline
+        .trim();
+    }
+    productNameElement = { innerText: productNameText };
+  }
 
   const productName = productNameElement ? productNameElement.innerText.trim() : "Product name not found";
   const productPrice = productPriceElement
@@ -55,7 +70,32 @@ function getProductInfo(quantity) {
     productPrice: productPrice,
     quantity: quantity,
     subtotal: subtotal,
-    productUrl: shortProductUrl,
+    productUrl: productUrl,
   });
 }
+
+
+// function getProductInfo(quantity) {
+//   const productNameElement = document.getElementById("productTitle");
+//   const productPriceElement = document.querySelector(".a-price-whole");
+//   const productUrl = window.location.href;
+//   const asinMatch = productUrl.match(/dp\/([A-Z0-9]{10})/);
+//   const asin = asinMatch ? asinMatch[1] : null;
+//   const shortProductUrl = asin ? `https://www.amazon.co.jp/dp/${asin}` : productUrl;
+
+//   const productName = productNameElement ? productNameElement.innerText.trim() : "Product name not found";
+//   const productPrice = productPriceElement
+//     ? parseFloat(productPriceElement.innerText.replace(",", "").replace("￥", "").trim())
+//     : 0;
+//   const subtotal = productPrice * quantity;
+
+//   chrome.runtime.sendMessage({
+//     type: "COPY_PRODUCT_INFO",
+//     productName: productName,
+//     productPrice: productPrice,
+//     quantity: quantity,
+//     subtotal: subtotal,
+//     productUrl: shortProductUrl,
+//   });
+// }
 
